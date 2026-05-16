@@ -72,6 +72,12 @@ The system analyzes weather-related parameters and predicts whether rainfall wil
 Random Forest Classifier
 
 ---
+## Project Outputs
+### Performance Evaluation
+![Performance Evaluation](performance%20evaluation.png)
+
+### AUC Score
+![AUC Score](AUC%20score.png)
 
 ## Future Improvements
 - Deploy as a web application
