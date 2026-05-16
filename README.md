@@ -90,6 +90,8 @@ Random Forest Classifier
 ## Author
 Harshita Singh
 
-B.Tech CSE (AI & DS) Student at Marwadi University || 
-IITM BS Degree Student  
+B.Tech CSE (AI & DS) Student at Marwadi University
+<br>
+IITM BS Degree Student 
+<br>
 Interested in Machine Learning and Data Science
