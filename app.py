@@ -1,10 +1,77 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.utils import resample
+
+st.set_page_config(
+    page_title="Rainfall Prediction System",
+    page_icon="🌧️",
+    layout="centered"
+)
+
+st.markdown("""
+<style>
+
+.stApp {
+    background-image: url("clouds.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+[data-testid="stHeader"] {
+    background: rgba(0,0,0,0);
+}
+
+.main {
+    background: rgba(0,0,0,0.72);
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+h1, h2, h3, h4, p, label {
+    color: white !important;
+}
+
+[data-testid="stMetricValue"] {
+    color: #38bdf8;
+}
+
+.stButton>button {
+    background-color: #2563eb;
+    color: white;
+    border-radius: 10px;
+    height: 3em;
+    width: 100%;
+    font-size: 18px;
+    border: none;
+}
+
+.stButton>button:hover {
+    background-color: #1d4ed8;
+    color: white;
+}
+
+[data-testid="stSidebar"] {
+    background-color: rgba(17,24,39,0.85);
+}
+
+div[data-baseweb="input"] {
+    background-color: rgba(255,255,255,0.12);
+    border-radius: 10px;
+}
+
+footer {
+    visibility: hidden;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 data = pd.read_csv("Rainfall.csv")
 
@@ -71,8 +138,8 @@ model.fit(X_train, y_train)
 st.sidebar.title("Rainfall Prediction App")
 
 st.sidebar.write("""
-This machine learning app predicts rainfall
-based on weather conditions.
+Predict rainfall using machine learning
+and weather parameters.
 """)
 
 st.title("Rainfall Prediction System")
@@ -80,6 +147,29 @@ st.title("Rainfall Prediction System")
 st.subheader("Predict rainfall using weather parameters")
 
 st.metric("Model Accuracy", "86%")
+
+st.subheader("Rainfall Distribution")
+
+rainfall_counts = data["rainfall"].value_counts()
+
+st.bar_chart(rainfall_counts)
+
+st.subheader("Humidity Trend")
+
+st.line_chart(data["humidity"].head(100))
+
+st.subheader("Feature Correlation Heatmap")
+
+fig, ax = plt.subplots(figsize=(8,6))
+
+sns.heatmap(
+    data.corr(numeric_only=True),
+    annot=True,
+    cmap="Blues",
+    ax=ax
+)
+
+st.pyplot(fig)
 
 st.write("Enter weather details below:")
 
@@ -134,17 +224,15 @@ if st.button("Predict Rainfall"):
 
         st.success("Rainfall Expected")
 
-        st.write(
-            f"Probability of Rainfall: {probability * 100:.2f}%"
-        )
-
     else:
 
         st.error("No Rainfall Expected")
 
-        st.write(
-            f"Probability of Rainfall: {probability * 100:.2f}%"
-        )
+    st.write(
+        f"Probability of Rainfall: {probability * 100:.2f}%"
+    )
+
+    st.progress(int(probability * 100))
 
 st.markdown("---")
 
