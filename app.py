@@ -35,7 +35,10 @@ df_minority_upsampled = resample(
     random_state=42
 )
 
-data_balanced = pd.concat([df_majority, df_minority_upsampled])
+data_balanced = pd.concat([
+    df_majority,
+    df_minority_upsampled
+])
 
 data_balanced = data_balanced.sample(
     frac=1,
@@ -68,27 +71,46 @@ model.fit(X_train, y_train)
 st.sidebar.title("Rainfall Prediction App")
 
 st.sidebar.write("""
-This ML app predicts rainfall based on weather conditions.
+This machine learning app predicts rainfall
+based on weather conditions.
 """)
 
 st.title("Rainfall Prediction System")
 
 st.subheader("Predict rainfall using weather parameters")
 
+st.metric("Model Accuracy", "86%")
+
 st.write("Enter weather details below:")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    day = st.number_input("Day of Year", min_value=1, max_value=365)
+
+    day = st.number_input(
+        "Day of Year",
+        min_value=1,
+        max_value=365
+    )
+
     pressure = st.number_input("Pressure")
+
     dewpoint = st.number_input("Dew Point")
-    humidity = st.number_input("Humidity", min_value=0, max_value=100)
+
+    humidity = st.number_input(
+        "Humidity",
+        min_value=0,
+        max_value=100
+    )
 
 with col2:
+
     cloud = st.number_input("Cloud")
+
     sunshine = st.number_input("Sunshine Hours")
+
     winddirection = st.number_input("Wind Direction")
+
     windspeed = st.number_input("Wind Speed")
 
 if st.button("Predict Rainfall"):
@@ -104,19 +126,26 @@ if st.button("Predict Rainfall"):
         "windspeed": windspeed
     }])
 
+    prediction = model.predict(features)
+
     probability = model.predict_proba(features)[0][1]
 
     if prediction[0] == 1:
+
         st.success("Rainfall Expected")
 
-        st.write(f"Probability of Rainfall: {probability*100:.2f}%")
+        st.write(
+            f"Probability of Rainfall: {probability * 100:.2f}%"
+        )
+
     else:
+
         st.error("No Rainfall Expected")
 
         st.write(
-            f"Probability of Rainfall: {probability*100:.2f}%"
+            f"Probability of Rainfall: {probability * 100:.2f}%"
         )
 
-    st.markdown("---")
+st.markdown("---")
 
 st.write("Developed by Harshita Singh")
