@@ -18,10 +18,7 @@ st.markdown("""
 <style>
 
 .stApp {
-    background-image: url("clouds.jpg");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background: linear-gradient(to bottom, #0f172a, #1e293b);
 }
 
 [data-testid="stHeader"] {
@@ -29,7 +26,7 @@ st.markdown("""
 }
 
 .main {
-    background: rgba(0,0,0,0.72);
+    background: rgba(0,0,0,0.65);
     padding: 2rem;
     border-radius: 15px;
 }
